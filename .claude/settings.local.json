@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(python -m file_primitives.read_file:*)",
+      "Bash(python -m file_primitives.write_file:*)",
+      "Bash(python -m file_primitives.ensure_dir:*)",
+      "Bash(python -m file_primitives.delete_path:*)",
+      "Bash(python:*)",
+      "Bash(python file_primitives/write_file.py:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
