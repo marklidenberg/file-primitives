@@ -26,6 +26,8 @@ def ensure_dir(
     else:
         os.makedirs(path, exist_ok=True)  # type: ignore
 
+    # - Return path
+
     return path
 
 

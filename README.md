@@ -1,7 +1,5 @@
 # file-primitives
 
-Python file primitives
-
 * `read_file`: reads file with an option to specify default if file does not exist or a custom reader (like `reader = lambda file: json.read(file)`)
 * `write_file`: writes file with auto-directory creation, custom writer, and optional atomic writes
 * `ensure_dir`: ensures a directory exists
@@ -12,7 +10,7 @@ def read_file(
     path: Union[str, Path],
     bytes: bool = False,
     reader: Callable[..., T] = lambda file: file.read(),
-    default: Union[D, object] = MISSING,  # if file does not exist
+    default: Union[D, _MissingType] = MISSING,
     encoding: str = "utf-8",
 ) -> Union[T, D]:
     pass
@@ -51,10 +49,10 @@ content = read_file("config.json")
 # Binary mode
 binary_content = read_file("image.png", bytes=True)
 
-# output dir will be created automatically
+# output dir will be created automatically by default
 write_file("output/data.json", {"key": "value"}, writer=lambda data, file: json.dump(data, file))
 
-# Atomic write (prevents corruption)
+# Atomic write
 write_file("important.json", data, atomic=True)
 
 # With error handling
@@ -64,5 +62,6 @@ ensure_dir("logs/2024/january")  # Creates full path
 ensure_dir("reports/summary.pdf", is_file=True)  # Creates "reports/" directory
 
 # Delete operations
-deleted = delete_path("temp/file.txt")  # Returns True if deleted, False if not found (with missing_ok=True)
+delete_path("temp/file.txt")
+deleted = delete_path("temp/file.txt", missing_ok=True)
 ```

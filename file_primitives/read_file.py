@@ -1,10 +1,15 @@
 import os.path
 
 from pathlib import Path
-from typing import Callable, TypeVar, Union, overload
+from typing import Callable, Final, TypeVar, Union, overload
 
 # Sentinel value for default parameter
-MISSING = object()
+
+class _MissingType:
+    pass
+
+
+MISSING: Final = _MissingType()
 
 T = TypeVar("T")
 D = TypeVar("D")
@@ -34,13 +39,16 @@ def read_file(
     path: Union[str, Path],
     bytes: bool = False,
     reader: Callable[..., T] = lambda file: file.read(),
-    default: Union[D, object] = MISSING,  # if file does not exist
+    default: Union[D, _MissingType] = MISSING,  # if file does not exist
     encoding: str = "utf-8",
 ) -> Union[T, D]:
     # - Check if file exists
 
-    if not os.path.exists(path) and default is not MISSING:
-        return default  # type: ignore
+    if not os.path.exists(path):
+        if default is not MISSING:
+            return default
+        else:
+            raise FileNotFoundError(f"File {path} not found")
 
     # - Read file
 

@@ -25,25 +25,28 @@ def write_file(
     if ensure_dir:
         _ensure_dir(path, is_file=True)  # type: ignore
 
-    # - Write file
+    # - Atomic write
 
     if atomic:
         # Write to a temporary file first, then rename (atomic operation)
-        path_obj = Path(path)
-        fd, temp_path = tempfile.mkstemp(
-            dir=path_obj.parent,
-            prefix=f".{path_obj.name}.",
+        _path = Path(path)
+        file_descriptor, temp_path = tempfile.mkstemp(
+            dir=_path.parent,
+            prefix=f".{_path.name}.",
             suffix=".tmp",
         )
         try:
+            # - Write
+
             with os.fdopen(
-                fd,
+                file_descriptor,
                 mode="wb" if bytes else "w",
                 encoding=encoding if not bytes else None,
             ) as file:
                 writer(data, file)
 
-            # Atomic rename
+            # - Atomic rename
+
             os.replace(temp_path, path)
         except Exception:
             # Clean up temp file on error
@@ -52,13 +55,17 @@ def write_file(
             except Exception:
                 pass
             raise
-    else:
-        with open(
-            path,
-            mode="wb" if bytes else "w",
-            encoding=encoding if not bytes else None,
-        ) as file:
-            writer(data, file)
+
+        return
+
+    # - Write file
+
+    with open(
+        path,
+        mode="wb" if bytes else "w",
+        encoding=encoding if not bytes else None,
+    ) as file:
+        writer(data, file)
 
 
 def test():
