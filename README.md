@@ -1,10 +1,5 @@
 # file-primitives
 
-* `read_file`: reads file with an option to specify default if file does not exist or a custom reader (like `reader = lambda file: json.read(file)`)
-* `write_file`: writes file with auto-directory creation, custom writer, and optional atomic writes
-* `ensure_dir`: ensures a directory exists
-* `delete_path`: deletes a file or directory. Returns `bool` indicating success.
-
 ```python
 def read_file(
     path: Union[str, Path],
@@ -13,7 +8,8 @@ def read_file(
     default: Union[D, _MissingType] = MISSING,
     encoding: str = "utf-8",
 ) -> Union[T, D]:
-    pass
+    """Reads file with an option to specify default if file does not exist or a custom reader (like `reader = lambda file: json.read(file)`)"""
+    ...
 
 def write_file(
     path: Union[str, Path],
@@ -24,20 +20,23 @@ def write_file(
     ensure_dir: bool = True,
     atomic: bool = False,
 ) -> None:
-    pass
+    """Writes file with auto-directory creation, custom writer, and optional atomic writes"""
+    ...
 
 def ensure_dir(
     path: T,  # T = TypeVar("T", str, Path)
     is_file: bool = False,
 ) -> T:
-    pass
+    """Ensures a directory exists"""
+    ...
 
 def delete_path(
     path: Union[str, Path],
     missing_ok: bool = False,
     delete_empty_parents: bool = False,
 ) -> bool:
-    pass
+    """Deletes a file or directory"""
+    ...
 
 ...
 
