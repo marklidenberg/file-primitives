@@ -1,5 +1,13 @@
 # file-primitives
 
+## Installation
+
+```bash
+pip install file-primitives
+```
+
+## Usage
+
 ```python
 def read_file(
     path: Union[str, Path],
@@ -64,3 +72,11 @@ ensure_dir("reports/summary.pdf", is_file=True)  # Creates "reports/" directory
 delete_path("temp/file.txt")
 deleted = delete_path("temp/file.txt", missing_ok=True)
 ```
+
+## License
+
+MIT License
+
+## Author
+
+Mark Lidenberg [marklidenberg@gmail.com](mailto:marklidenberg@gmail.com)
