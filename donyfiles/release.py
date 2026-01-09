@@ -1,6 +1,5 @@
 from marklidenberg_donyfiles import release
-import dony
+import asyncio
 
 if __name__ == "__main__":
-    dony.command(run_from="git_root")(release)()
-
+    asyncio.run(release(path=__file__))

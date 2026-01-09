@@ -20,7 +20,8 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "marklidenberg-donyfiles==0.3.1",
+    "dony>=0.5.1",
+    "marklidenberg-donyfiles>=0.4.0",
 ]
 
 [dependency-groups]

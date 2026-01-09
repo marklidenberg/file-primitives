@@ -1,6 +1,5 @@
 from marklidenberg_donyfiles import update_secrets_baseline
-import dony
+import asyncio
 
 if __name__ == "__main__":
-    dony.command(run_from="git_root")(update_secrets_baseline)()
-
+    asyncio.run(update_secrets_baseline(path=__file__))
